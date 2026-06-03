@@ -1,7 +1,7 @@
 import pandas as pd
 import datetime as dt
 #from sqlalchemy import create_engine
-from config import TODAY, BOOKS_PATH, CUSTOMERS_PATH, BOOKS_TABLE_NAME, CUSTOMERS_TABLE_NAME, CONNECTION_STRING, SAVE_TO_SQL
+from app.config import TODAY, BOOKS_PATH, CUSTOMERS_PATH, BOOKS_TABLE_NAME, CUSTOMERS_TABLE_NAME, CONNECTION_STRING, SAVE_TO_SQL
 from loguru import logger
 
 ## Functions 
