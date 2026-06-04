@@ -3,6 +3,8 @@ import datetime as dt
 #from sqlalchemy import create_engine
 from app.config import TODAY, BOOKS_PATH, CUSTOMERS_PATH, BOOKS_TABLE_NAME, CUSTOMERS_TABLE_NAME, CONNECTION_STRING, SAVE_TO_SQL
 from loguru import logger
+from app.monitoring import pipeline_metrics
+import time
 
 ## Functions 
 def create_dataframe(path):
@@ -87,6 +89,7 @@ def enrich_date(df, start_col, end_col):
 if __name__=='__main__':
 
     logger.info('Cleaning process begining')
+    start_time = time.time()
 
     # Create Dataframes
     df_books = create_dataframe(BOOKS_PATH)
