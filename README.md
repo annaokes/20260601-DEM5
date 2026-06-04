@@ -15,6 +15,7 @@ This project provides an end-to-end data pipeline for library book records. It u
 ├── adhoc/
 │   └── docker/             # Docker setup for ad-hoc runs
 ├── app/                    # Main application source code
+├── output/                 # Pipeli metrics output
 ├── tests/                  # Unit and integration tests
 ├── DE5M5_Library_Books.db  # SQLite database of library books
 ├── pipeline_metrics.csv    # Logged metrics from pipeline runs
