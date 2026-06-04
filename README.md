@@ -1,6 +1,6 @@
 # 20260601-DEM5 — Library Books Data Pipeline
 
-A Python data engineering project for ingesting, processing, and analysing library book data. The pipeline reads from a SQLite database, applies transformations, and tracks pipeline run metrics.
+A Python data engineering project for ingesting, processing, and analysing library book data. The pipeline reads from a multiple csvs, applies transformations, and tracks pipeline run metrics.
 
 ## Overview
 
@@ -20,19 +20,6 @@ This project provides an end-to-end data pipeline for library book records. It u
 ├── pipeline_metrics.csv    # Logged metrics from pipeline runs
 ├── requirements.txt        # Python dependencies
 └── README.md
-```
-
-## Prerequisites
-
-- Python 3.8+
-- Docker (optional, for containerised runs)
-
-## Installation
-
-```bash
-git clone https://github.com/annaokes/20260601-DEM5.git
-cd 20260601-DEM5
-pip install -r requirements.txt
 ```
 
 ## Dependencies
@@ -74,10 +61,3 @@ Each pipeline run appends a row to `pipeline_metrics.csv`, capturing run-level s
 ## CI/CD
 
 GitHub Actions workflows in `.github/workflows/` automate testing and linting on every push and pull request to `main`.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes and push
-4. Open a pull request against `main`
