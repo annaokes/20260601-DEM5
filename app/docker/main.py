@@ -95,6 +95,9 @@ if __name__=='__main__':
     df_books = create_dataframe(BOOKS_PATH)
     df_customers = create_dataframe(CUSTOMERS_PATH)
 
+    number_of_inputs = len(df_books) + len(df_customers)
+    pipeline_metrics['number_of_records_input'] = number_of_inputs
+
     ## Data Cleaning Steps
 
     ## convert columns to int
@@ -120,16 +123,30 @@ if __name__=='__main__':
 
     df_books = rename_columns(df_books, mapping)
 
-
     df_books = convert_and_validate_dates(df_books, ['book_checkout', 'book_returned'])
     df_books = enrich_date(df_books, 'book_checkout', 'book_returned')
+    logger.info('Cleaning process complete')
 
+    number_of_outputs = len(df_books) + len(df_customers)
+    pipeline_metrics['number_of_records_output'] = number_of_outputs
+    pipeline_metrics['number_of_records_dropped'] = (pipeline_metrics['number_of_records_input'] - pipeline_metrics['number_of_records_output'] )
+
+    
+    pipeline_metrics['number_of_books'] = df_books['id'].unique()
+    pipeline_metrics['number_of_customers'] = df_customers['customer_id'].unique()
+  
     if SAVE_TO_SQL:
         logger.info('Uploading to SQL')
         save_df_to_sql(df_books, BOOKS_TABLE_NAME, CONNECTION_STRING, if_exists='append')
         save_df_to_sql(df_customers, CUSTOMERS_TABLE_NAME, CONNECTION_STRING, if_exists='append')
     
-    logger.info('Cleaning process complete')
+
+    pipeline_metrics['pipeline_execution_time'] = (round(time.time() - start_time, 2))
+    metrics_df = pd.DataFrame([pipeline_metrics])
+    
+    metrics_df.to_csv('pipeline_metrics.csv', index=False)
+    logger.info('process complete')
+    
 
 
 
