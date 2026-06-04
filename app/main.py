@@ -78,10 +78,9 @@ def save_df_to_sql(df, table_name, conn_string, if_exists='append'):
 
 def enrich_date(df, start_col, end_col):
 
-    date_difference = df[end_col] - df[start_col]
-    date_difference_days = date_difference.dt.days
+    df['days_borrowed'] = (df[end_col] - df[start_col]).dt.days
 
-    return date_difference_days
+    return df
 
 ## create function to monitor invalid dfs
 
@@ -123,6 +122,12 @@ if __name__=='__main__':
 
     df_books = rename_columns(df_books, mapping)
 
+    mapping = {
+        'Customer ID': 'customer_id',
+        'Customer Name': 'customer_name'
+    }
+    df_customers = rename_columns(df_customers, mapping)
+
     df_books = convert_and_validate_dates(df_books, ['book_checkout', 'book_returned'])
     df_books = enrich_date(df_books, 'book_checkout', 'book_returned')
     logger.info('Cleaning process complete')
@@ -132,8 +137,8 @@ if __name__=='__main__':
     pipeline_metrics['number_of_records_dropped'] = (pipeline_metrics['number_of_records_input'] - pipeline_metrics['number_of_records_output'] )
 
     
-    pipeline_metrics['number_of_books'] = df_books['id'].unique()
-    pipeline_metrics['number_of_customers'] = df_customers['customer_id'].unique()
+    pipeline_metrics['number_of_books'] = df_books['id'].nunique()
+    pipeline_metrics['number_of_customers'] = df_customers['customer_id'].nunique()
   
     if SAVE_TO_SQL:
         logger.info('Uploading to SQL')

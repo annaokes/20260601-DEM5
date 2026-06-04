@@ -1,0 +1,2 @@
+run_timestamp,number_of_records_input,number_of_records_output,number_of_records_dropped,number_of_books,number_of_customers,pipeline_execution_time
+2026-06-04 14:32:16.291512,123,29,94,21,8,0.08
